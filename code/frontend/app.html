@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libra Assist - Admin Panel</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Libra Assist — Admin Panel</h1>
+        
+        <div id="errorBanner" class="error-banner"></div>
+
+        <div class="grid-2">
+            <!-- Service Status -->
+            <div class="card">
+                <h2>1. Service Status</h2>
+                <button onclick="fetchStatus()">Refresh /health & /config</button>
+                <div id="statusResult" style="margin-top: 15px;"></div>
+            </div>
+
+            <!-- Collection -->
+            <div class="card">
+                <h2>2. Collection Management</h2>
+                <button onclick="fetchCollection()">Get Info</button>
+                <button class="danger" onclick="resetCollection()">Reset (Delete All)</button>
+                <div id="collectionResult" style="margin-top: 15px;"></div>
+            </div>
+        </div>
+
+        <!-- Chunk & Ingest -->
+        <div class="card">
+            <h2>3. Chunk & Ingest</h2>
+            <textarea id="sourceText" placeholder="Paste text here to chunk and/or ingest..."></textarea>
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 15px;">
+                <label>Strategy:</label>
+                <select id="chunkStrategy" style="width: auto; margin-bottom: 0;">
+                    <option value="dynamic">Dynamic</option>
+                    <option value="static">Static</option>
+                    <option value="sentence">Sentence</option>
+                    <option value="semantic">Semantic</option>
+                </select>
+                <button onclick="doChunk()">Preview Chunks</button>
+                <button style="background: var(--success);" onclick="doIngest()">Ingest to Qdrant</button>
+            </div>
+            <div id="chunkResult"></div>
+        </div>
+
+        <!-- Search -->
+        <div class="card">
+            <h2>4. Vector Search</h2>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="text" id="searchQuery" placeholder="Type a search query..." style="margin-bottom: 0; flex: 1;">
+                <label style="white-space: nowrap;">Top K:</label>
+                <input type="number" id="searchTopK" value="4" min="1" max="50" style="width: 60px; margin-bottom: 0; padding: 8px;">
+                <button onclick="doSearch()">Search</button>
+            </div>
+            <div id="searchResult" style="margin-top: 15px;"></div>
+        </div>
+
+        <!-- Ask (RAG) -->
+        <div class="card">
+            <h2>5. Ask (Generation)</h2>
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                <input type="text" id="askQuery" placeholder="Type a question for the LLM..." style="margin-bottom: 0; flex: 1;">
+                <label style="white-space: nowrap;">
+                    <input type="checkbox" id="useRag" checked> Use RAG
+                </label>
+                <button onclick="doAsk()">Ask</button>
+                <button style="background: #6c757d;" onclick="doCompare()">Compare Side-by-Side</button>
+            </div>
+            <div id="askResult"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
