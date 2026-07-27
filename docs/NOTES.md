@@ -20,3 +20,5 @@ When `use_rag` is `true`, the exact text passages retrieved from the vector data
 ## 5. Lyrical Agent Execution
 The `lyrical` agent can run on **both** (local and Azure Foundry) once deployed.
 **How I know:** The `runs_on` field in the JSON response from the "List agents" endpoint explicitly states the environment(s) where the agent is authorized/configured to run.
+
+**Note on Agents Screenshot**: Due to strict corporate laptop policies, I could not install Node.js and uv to run the stack locally. I ran the full stack via Docker. As expected, the agents display "Foundry: unknown" because the Docker container uses API key authentication, whereas the Agent Service strictly requires Microsoft Entra ID authentication (via az login), which is only available in the local run.
